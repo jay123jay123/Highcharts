@@ -1,0 +1,44 @@
+<!DOCTYPE html>  
+<html lang="en">  
+
+  <head>  
+  <meta charset="UTF-8">  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">  
+  <title>ajaxtest</title>  
+  </head>  
+
+                    <body>  
+                    </body>  
+
+                          <script src="jquery.min.js"></script>  
+
+                            <script>  
+                            function writeObj(data){ 
+                                     var description = ""; 
+                                     for(var i in data.menuData){ 
+                                             str += "<li><a href='#'  id=\"nav_"+i+"\" ";
+
+
+                                     }
+
+
+                            }
+                            function ajax() {  
+                                    $.ajax({  
+                                            url: 'http://192.168.8.253/tu/summary.php',  
+                                            dataType: 'json',  
+                                            type: 'get',  
+                                            data: {  
+                                                    tb:'activity-service'
+                                            },  
+                                            success: function (data) {  
+                                                    console.log(data);  
+                                                    writeObj(data);
+                                            }  
+                                    })  
+                            };  
+                            window.onload = function(){ajax();};
+                            </script>  
+
+</html>  

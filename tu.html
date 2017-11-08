@@ -1,0 +1,120 @@
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>方法趋势图</title>
+<script src="jquery.min.js"></script>
+<script src="highcharts.js"></script>
+</head>
+<body>
+<div id="container" style="width: 1800px; height: 400px; margin: 0 auto"></div>
+<script language="JavaScript">
+
+
+
+var tu = function(text) {
+
+           var title = {
+//                          text: 'net.xuele.achieve.service.AchieveService'
+                      };
+           title.text = text;
+           var subtitle = {
+                           text: 'Source: www.xueleyun.com'
+                      };
+           var xAxis = {
+                         categories: []
+                      };
+           var yAxis = {
+                         title: {
+                                          text: '耗时毫秒'
+                                       },
+                         plotLines: [{
+                                          value: 0,
+                                          width: 1,
+                                          color: '#808080'
+                                       }]
+                      };   
+
+           var tooltip = {
+                         valueSuffix: 'ms'
+                      }
+
+           var legend = {
+                         layout: 'vertical',
+                         align: 'right',
+                         verticalAlign: 'middle',
+                         borderWidth: 0
+                      };
+
+           var series =  [
+                         {
+                                          name: '',
+                                          data:[]
+                                       },
+                         {
+                                          name:'',
+                                          data:[]
+                         }
+                      ];
+
+            var commandsUrl = "http://192.168.8.253/tu/api.php?tb=avg_achieve-service&si=net.xuele.achieve.service.AchieveService&me=countUserAchieve";
+            series[0].name = 'countUserAchieve';
+            $.ajax({
+                    type : "get",
+                    url : commandsUrl,
+                    async : false,
+                    success : function(data) {
+                            for(var i = 0; i < data.length; i++){
+                                    xAxis.categories.push(data[i].timestamp);
+                                    series[0].data.push(+data[i].elapsed);
+                           }
+ 
+                             
+                    }
+            }); 
+
+
+
+            var commandsUrl = "http://192.168.8.253/tu/api.php?tb=result_achieve-service&si=net.xuele.achieve.service.AchieveService&me=countUserAchieve";
+            series[1].name = '7days-countUserAchieve';
+            $.ajax({
+                    type : "get",
+                    url : commandsUrl,
+                    async : false,
+                    success : function(data) {
+                            for(var i = 0; i < data.length; i++){
+                                    series[1].data.push(+data[i].elapsed);
+                           }
+ 
+                             
+                    }
+            }); 
+
+
+
+
+
+
+
+
+                           var json = {};
+                        
+                           json.title = title;
+                           json.subtitle = subtitle;
+                           json.xAxis = xAxis;
+                           json.yAxis = yAxis;
+                           json.tooltip = tooltip;
+                           json.legend = legend;
+                           json.series = series;
+                           $('#container').highcharts(json);
+
+
+};
+
+
+
+var tutu = tu('aaaa');
+$(document).ready(tutu) ;
+
+</script>
+</body>
+</html>
